@@ -9,7 +9,7 @@ class App extends React.Component {
         this.state = {
             positive: 0,
             neutral: 0,
-            bad : 0
+            negative : 0
         }
     }
 
@@ -25,9 +25,9 @@ class App extends React.Component {
         })
     };
 
-    ClickBad = () => {
+    ClickNegative= () => {
         this.setState({
-            bad: this.state.bad + 1
+            negative: this.state.negative+ 1
         })
     };
 
@@ -38,7 +38,7 @@ class App extends React.Component {
                 <p> Anna palautetta </p>
                 <button onClick={this.ClickPositive}>Hyvä</button>
                 <button onClick={this.ClickNeutral}>Neutraali</button>
-                <button onClick={this.ClickBad}>Huono</button>
+                <button onClick={this.ClickNegative}>Huono</button>
             </div>
         )
     };
@@ -54,7 +54,7 @@ class App extends React.Component {
                     Neutraali {this.state.neutral}
                 </div>
                 <div>
-                    Huono {this.state.bad}
+                    Huono {this.state.negative}
                 </div>
 
             </div>
@@ -62,10 +62,14 @@ class App extends React.Component {
     };
 
     render() {
+        const average = () => ((this.state.positive - this.state.negative) / (this.state.positive + this.state.neutral + this.state.negative)).toFixed(1)
+        const positivePercentage  = () => ((this.state.positive/(this.state.positive + this.state.neutral + this.state.negative))*100).toFixed(1) + ' %'
         return (
             <div>
                 <this.GiveFeedback/>
                 <this.Statistics/>
+                <div>{average()}</div>
+                <div>{positivePercentage()}</div>
             </div>
         )
     }
