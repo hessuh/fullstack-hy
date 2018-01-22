@@ -72,12 +72,17 @@ class App extends React.Component {
     }
 
     Statistics = (props) => {
+        const average = () => ((this.state.positive - this.state.negative) / (this.state.positive + this.state.neutral + this.state.negative)).toFixed(1)
+        const positivePercentage  = () => ((this.state.positive / (this.state.positive + this.state.neutral + this.state.negative))*100).toFixed(1) + ' %'
+
         return (
             <div>
                 <p> Statistiikka </p>
                 <this.Statistic stats={this.values.positive} jep={this.state.positive}/>
                 <this.Statistic stats={this.values.neutral} jep={this.state.neutral}/>
                 <this.Statistic stats={this.values.negative} jep={this.state.negative}/>
+                <this.Stats fun={average()}/>
+                <this.Stats fun={positivePercentage()}/>
             </div>
         )
     }
@@ -91,16 +96,20 @@ class App extends React.Component {
     }
 
     render() {
-        const average = () => ((this.state.positive - this.state.negative) / (this.state.positive + this.state.neutral + this.state.negative)).toFixed(1)
-        const positivePercentage  = () => ((this.state.positive/(this.state.positive + this.state.neutral + this.state.negative))*100).toFixed(1) + ' %'
+        if ((this.state.positive + this.state.negative + this.state.neutral) > 0) {
+            return (
+                <div>
+                    <this.GiveFeedback/>
+                    <this.Statistics values={this.values}/>
+                </div>
+            )
+        }
         return (
             <div>
                 <this.GiveFeedback/>
-                <this.Statistics values={this.values}/>
-                <this.Stats fun={average()}/>
-                <this.Stats fun={positivePercentage()}/>
             </div>
         )
+
     }
 };
 
