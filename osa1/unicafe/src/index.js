@@ -26,6 +26,11 @@ class App extends React.Component {
                 text: "Huono"
             }
         }
+
+        this.functions = {
+            average : () => ((this.state.positive - this.state.negative) / (this.state.positive + this.state.neutral + this.state.negative)).toFixed(1),
+            positivePercentage : () => ((this.state.positive / (this.state.positive + this.state.neutral + this.state.negative))*100).toFixed(1) + ' %'
+        }
     }
 
     ClickPositive = () => {
@@ -66,23 +71,23 @@ class App extends React.Component {
     Statistic = (props) => {
         return (
             <div>
-                {props.stats.text} {props.jep}
+                {props.stats.text} {props.state}
             </div>
         )
     }
 
+
+
     Statistics = (props) => {
-        const average = () => ((this.state.positive - this.state.negative) / (this.state.positive + this.state.neutral + this.state.negative)).toFixed(1)
-        const positivePercentage  = () => ((this.state.positive / (this.state.positive + this.state.neutral + this.state.negative))*100).toFixed(1) + ' %'
 
         return (
             <div>
-                <p> Statistiikka </p>
-                <this.Statistic stats={this.values.positive} jep={this.state.positive}/>
-                <this.Statistic stats={this.values.neutral} jep={this.state.neutral}/>
-                <this.Statistic stats={this.values.negative} jep={this.state.negative}/>
-                <this.Stats fun={average()}/>
-                <this.Stats fun={positivePercentage()}/>
+                <p>Statistiikka</p>
+                <this.Statistic stats={this.values.positive} state={this.state.positive}/>
+                <this.Statistic stats={this.values.neutral} state={this.state.neutral}/>
+                <this.Statistic stats={this.values.negative} state={this.state.negative}/>
+                <this.Stats fun={this.functions.average()}/>
+                <this.Stats fun={this.functions.positivePercentage()}/>
             </div>
         )
     }
@@ -107,6 +112,8 @@ class App extends React.Component {
         return (
             <div>
                 <this.GiveFeedback/>
+                <p>Statistiikka</p>
+                <p>Ei yhtään palautetta annettu</p>
             </div>
         )
 
