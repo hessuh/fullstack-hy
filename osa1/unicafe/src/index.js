@@ -11,9 +11,24 @@ class App extends React.Component {
             neutral: 0,
             negative : 0
         }
+
+        this.values = {
+            positive: {
+                state: "this.state.positive",
+                text: "Hyvä"
+            },
+            neutral: {
+                state: "neutral",
+                text: "Neutraali"
+            },
+            negative: {
+                state: "this.state.negative",
+                text: "Huono"
+            }
+        }
     }
 
-    ClickPositive= () => {
+    ClickPositive = () => {
         this.setState({
             positive: this.state.positive + 1
         })
@@ -25,41 +40,55 @@ class App extends React.Component {
         })
     };
 
-    ClickNegative= () => {
+    ClickNegative = () => {
         this.setState({
-            negative: this.state.negative+ 1
+            negative: this.state.negative + 1
         })
     };
 
+    Button = (props) => {
+        return (
+            <button onClick={props.type}> {props.text} </button>
+        )
+    }
 
     GiveFeedback = () => {
         return (
             <div>
                 <p> Anna palautetta </p>
-                <button onClick={this.ClickPositive}>Hyvä</button>
-                <button onClick={this.ClickNeutral}>Neutraali</button>
-                <button onClick={this.ClickNegative}>Huono</button>
+                <this.Button text={"Hyvä"} type={this.ClickPositive} />
+                <this.Button text={"Neutraali"} type={this.ClickNeutral} />
+                <this.Button text={"Huono"} type={this.ClickNegative} />
             </div>
         )
     };
 
-    Statistics = () => {
+    Statistic = (props) => {
+        return (
+            <div>
+                {props.stats.text} {props.jep}
+            </div>
+        )
+    }
+
+    Statistics = (props) => {
         return (
             <div>
                 <p> Statistiikka </p>
-                <div>
-                    Hyvä {this.state.positive}
-                </div>
-                <div>
-                    Neutraali {this.state.neutral}
-                </div>
-                <div>
-                    Huono {this.state.negative}
-                </div>
-
+                <this.Statistic stats={this.values.positive} jep={this.state.positive}/>
+                <this.Statistic stats={this.values.neutral} jep={this.state.neutral}/>
+                <this.Statistic stats={this.values.negative} jep={this.state.negative}/>
             </div>
         )
-    };
+    }
+
+    Stats = (props) => {
+        return (
+            <div>
+                {props.fun}
+            </div>
+        )
+    }
 
     render() {
         const average = () => ((this.state.positive - this.state.negative) / (this.state.positive + this.state.neutral + this.state.negative)).toFixed(1)
@@ -67,16 +96,13 @@ class App extends React.Component {
         return (
             <div>
                 <this.GiveFeedback/>
-                <this.Statistics/>
-                <div>{average()}</div>
-                <div>{positivePercentage()}</div>
+                <this.Statistics values={this.values}/>
+                <this.Stats fun={average()}/>
+                <this.Stats fun={positivePercentage()}/>
             </div>
         )
     }
-
 };
-
-
 
 ReactDOM.render(
     <App/>,
