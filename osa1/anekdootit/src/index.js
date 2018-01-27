@@ -24,31 +24,45 @@ class App extends React.Component {
 
     Button = ({func, text}) => {
         return (
-            <div>
                 <button onClick={func()}> {text} </button>
+        )
+    };
+
+    Anecdote = ({anecdote}) => {
+        return (
+            <div>
+                <div>
+                    {anecdote.text}
+                </div>
+                <div>
+                    Votes: {anecdote.votes}
+                </div>
             </div>
         )
     };
 
-    Anecdote = () => {
-        return (
-            <div>
-                <div>
-                    {this.state.selected.text}
-                </div>
-                <div>
-                    Votes: {this.state.selected.votes}
-                </div>
-            </div>
-        )
+    most_voted_anecdote = () => {
+        let i, max;
+        i = max = 0;
+        for (let x = 0; x < this.state.anecdotes.length; x++ ) {
+            if (this.state.anecdotes[x].votes > max) {
+                max = this.state.anecdotes[x].votes;
+                i = x;
+            }
+        }
+        return this.state.anecdotes[i];
     };
 
     render() {
         return (
             <div>
-                <this.Anecdote/>
-                <this.Button func={this.random_anecdote} text="Random"/>
+                <this.Anecdote anecdote={this.state.selected}/>
                 <this.Button func={this.vote_anecdote} text="Vote"/>
+                <this.Button func={this.random_anecdote} text="Next anecdote"/>
+                <div>
+                    <b> Anecdote with most votes: </b>
+                    <this.Anecdote anecdote={this.most_voted_anecdote()}/>
+                </div>
             </div>
         )
     }
