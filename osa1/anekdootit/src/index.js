@@ -4,15 +4,16 @@ import ReactDOM from 'react-dom'
 class App extends React.Component {
     constructor(props) {
         super(props);
+        const arr = this.props.anecdotes.map(a => ({text: a, votes: 0}));
         this.state = {
-            selected: 0,
-            anecdotes: this.props.anecdotes
+            selected: arr[0],
+            anecdotes: arr
         }
     }
 
     random_anecdote = () => () =>
         this.setState({
-            selected: Math.floor(Math.random() * Math.floor(this.state.anecdotes.length))
+            selected: this.state.anecdotes[Math.floor(Math.random() * Math.floor(this.state.anecdotes.length))]
         });
 
     Button = ({func, text}) => {
@@ -23,11 +24,10 @@ class App extends React.Component {
         )
     };
 
-
     Anecdote = () => {
         return (
             <div>
-                {this.state.anecdotes[this.state.selected]}
+                {this.state.selected.text}
             </div>
         )
     };
@@ -36,7 +36,7 @@ class App extends React.Component {
         return (
             <div>
                 <this.Anecdote/>
-                <this.Button func={this.random_anecdote} text="Random" />
+                <this.Button func={this.random_anecdote} text="Random"/>
             </div>
         )
     }
