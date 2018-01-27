@@ -4,50 +4,25 @@ import ReactDOM from 'react-dom'
 class App extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             positive: 0,
             neutral: 0,
             negative : 0
-        }
-
-        this.values = {
-            positive: {
-                state: "this.state.positive",
-                text: "Hyvä"
-            },
-            neutral: {
-                state: "neutral",
-                text: "Neutraali"
-            },
-            negative: {
-                state: "this.state.negative",
-                text: "Huono"
-            }
-        }
+        };
 
         this.functions = {
-            average : () => ((this.state.positive - this.state.negative) / (this.state.positive + this.state.neutral + this.state.negative)).toFixed(1),
-            positivePercentage : () => ((this.state.positive / (this.state.positive + this.state.neutral + this.state.negative))*100).toFixed(1) + ' %'
+            average: () => (
+                (this.state.positive - this.state.negative) / (this.state.positive + this.state.neutral + this.state.negative)).toFixed(1),
+            positivePercentage: () => (
+                (this.state.positive / (this.state.positive + this.state.neutral + this.state.negative)) * 100).toFixed(1) + ' %'
         }
     }
 
-    ClickPositive = () => {
+    ClickFeedback = (arvo) => () => {
         this.setState({
-            positive: this.state.positive + 1
-        })
-    };
-
-    ClickNeutral = () => {
-        this.setState({
-            neutral: this.state.neutral + 1
-        })
-    };
-
-    ClickNegative = () => {
-        this.setState({
-            negative: this.state.negative + 1
+            [arvo]: this.state[arvo] + 1
         })
     };
 
@@ -55,15 +30,15 @@ class App extends React.Component {
         return (
             <button onClick={props.type}> {props.text} </button>
         )
-    }
+    };
 
     GiveFeedback = () => {
         return (
             <div>
                 <p> Anna palautetta </p>
-                <this.Button text={"Hyvä"} type={this.ClickPositive} />
-                <this.Button text={"Neutraali"} type={this.ClickNeutral} />
-                <this.Button text={"Huono"} type={this.ClickNegative} />
+                <this.Button text={"Hyvä"} type={this.ClickFeedback("positive")} />
+                <this.Button text={"Neutraali"} type={this.ClickFeedback("neutral")} />
+                <this.Button text={"Huono"} type={this.ClickFeedback("negative")} />
             </div>
         )
     };
@@ -71,26 +46,24 @@ class App extends React.Component {
     Statistic = (props) => {
         return (
             <div>
-                {props.stats.text} {props.state}
+                {props.text} {props.state}
             </div>
         )
-    }
-
+    };
 
 
     Statistics = (props) => {
-
         return (
             <div>
                 <p>Statistiikka</p>
-                <this.Statistic stats={this.values.positive} state={this.state.positive}/>
-                <this.Statistic stats={this.values.neutral} state={this.state.neutral}/>
-                <this.Statistic stats={this.values.negative} state={this.state.negative}/>
+                <this.Statistic text={"hyvä"} state={this.state.positive}/>
+                <this.Statistic text={"neutraali"} state={this.state.neutral}/>
+                <this.Statistic text={"huono"} state={this.state.negative}/>
                 <this.Stats fun={this.functions.average()}/>
                 <this.Stats fun={this.functions.positivePercentage()}/>
             </div>
         )
-    }
+    };
 
     Stats = (props) => {
         return (
@@ -98,7 +71,7 @@ class App extends React.Component {
                 {props.fun}
             </div>
         )
-    }
+    };
 
     render() {
         if ((this.state.positive + this.state.negative + this.state.neutral) > 0) {
@@ -119,6 +92,9 @@ class App extends React.Component {
 
     }
 };
+
+
+
 
 ReactDOM.render(
     <App/>,
