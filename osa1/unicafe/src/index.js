@@ -46,7 +46,10 @@ class App extends React.Component {
     Statistic = (props) => {
         return (
             <div>
-                {props.text} {props.state}
+                <tr>
+                    <td width="100">{props.text}</td>
+                    <td width="100">{props.state}</td>
+                </tr>
             </div>
         )
     };
@@ -55,12 +58,16 @@ class App extends React.Component {
     Statistics = (props) => {
         return (
             <div>
-                <p>Statistiikka</p>
-                <this.Statistic text={"hyvä"} state={this.state.positive}/>
-                <this.Statistic text={"neutraali"} state={this.state.neutral}/>
-                <this.Statistic text={"huono"} state={this.state.negative}/>
-                <this.Stats fun={this.functions.average()}/>
-                <this.Stats fun={this.functions.positivePercentage()}/>
+                <table>
+                    <tbody>
+                        <p>Statistiikka</p>
+                        <this.Statistic text={"hyvä"} state={this.state.positive}/>
+                        <this.Statistic text={"neutraali"} state={this.state.neutral}/>
+                        <this.Statistic text={"huono"} state={this.state.negative}/>
+                        <this.Statistic text={"keskiarvo"} state={this.functions.average()}/>
+                        <this.Statistic text={"positiivisia"} state={this.functions.positivePercentage()}/>
+                    </tbody>
+                </table>
             </div>
         )
     };
