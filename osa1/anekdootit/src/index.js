@@ -16,6 +16,12 @@ class App extends React.Component {
             selected: this.state.anecdotes[Math.floor(Math.random() * Math.floor(this.state.anecdotes.length))]
         });
 
+    vote_anecdote = () => () => {
+        this.state.anecdotes[this.state.anecdotes.indexOf(this.state.selected)].votes++
+        this.setState({
+            anecdotes: this.state.anecdotes
+        })};
+
     Button = ({func, text}) => {
         return (
             <div>
@@ -27,7 +33,12 @@ class App extends React.Component {
     Anecdote = () => {
         return (
             <div>
-                {this.state.selected.text}
+                <div>
+                    {this.state.selected.text}
+                </div>
+                <div>
+                    Votes: {this.state.selected.votes}
+                </div>
             </div>
         )
     };
@@ -37,6 +48,7 @@ class App extends React.Component {
             <div>
                 <this.Anecdote/>
                 <this.Button func={this.random_anecdote} text="Random"/>
+                <this.Button func={this.vote_anecdote} text="Vote"/>
             </div>
         )
     }
