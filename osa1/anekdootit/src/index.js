@@ -23,12 +23,20 @@ class App extends React.Component {
         )
     };
 
+
+    Anecdote = () => {
+        return (
+            <div>
+                {this.state.anecdotes[this.state.selected]}
+            </div>
+        )
+    };
+
     render() {
         return (
             <div>
+                <this.Anecdote/>
                 <this.Button func={this.random_anecdote} text="Random" />
-
-                {this.state.anecdotes[this.state.selected]}
             </div>
         )
     }
