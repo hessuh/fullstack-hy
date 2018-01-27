@@ -17,9 +17,10 @@ class App extends React.Component {
         });
 
     vote_anecdote = () => () => {
-        this.state.anecdotes[this.state.anecdotes.indexOf(this.state.selected)].votes++
+        let new_arr = this.state.anecdotes
+        new_arr[new_arr.indexOf(this.state.selected)].votes++
         this.setState({
-            anecdotes: this.state.anecdotes
+            anecdotes: new_arr
         })};
 
     Button = ({func, text}) => {
