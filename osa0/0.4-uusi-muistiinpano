@@ -1,0 +1,38 @@
+kayttaja->selain:
+note left of selain
+eli kirjoittaa tekstikenttään jotain ja 
+painaa nappia tallenna
+end note
+
+selain->palvelin: POST fullstack-exampleapp.herokuapp.com/new_note
+palvelin->selain: status 302, location: /notes
+note left of selain
+Selain uudelleenohjaa palvelimen palauttamaan osoitteeseen /notes
+end note
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/notes
+palvelin->selain: HTML-koodi
+note left of selain
+selain noutaa osoitteessa olevan HTML-koodin
+end note
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.css
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.js
+
+palvelin->selain: status 200, CSS-tyyli
+note left of selain
+selain ottaa käyttöön tyylitiedoston
+end note
+
+palvelin->selain: status 200 OK, javascript-koodia
+note left of selain
+selain suorittaa haetun main.js javascript tiedoston,
+joka avaa uuden HTTP GET yhteyden data.json tiedon noutoa varten
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/data.json
+palvelin->selain: status 200 OK, json-data
+
+note left of selain
+Javascript lisää elementit olemassa olevaan html koodiin,
+jonka selain sitten näyttää. Data tulostetaan myös konsoliin.
+end note
