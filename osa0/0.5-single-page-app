@@ -1,0 +1,35 @@
+kayttaja->selain:
+note left of selain
+Käyttäjä menee selaimella osoitteeseen 
+https://fullstack-exampleapp.herokuapp.com/spa 
+eli muistiinpanojen single page app-versioon
+end note
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/spa
+palvelin->selain: Status 200 OK, HTML-koodi
+note left of selain
+selain näyttää haetun HTML-sivun
+ja hakee palvelimelta CSS-tyylitiedoston ja
+javascript-koodin
+end note
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.css
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/spa.js
+
+palvelin->selain: status 200, CSS-tyyli
+note left of selain
+selain ottaa käyttöön tyylitiedoston
+end note
+
+palvelin->selain: status 200 OK, javascript-koodia
+note left of selain
+selain suorittaa haetun spa.js javascript tiedoston,
+joka avaa uuden HTTP GET yhteyden data.json tiedon noutoa varten
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/data.json
+palvelin->selain: status 200 OK, json-data
+
+note left of selain
+Javascript lisää elementit olemassa olevaan html koodiin,
+jonka selain sitten näyttää. Data tulostetaan myös konsoliin.
+end note
