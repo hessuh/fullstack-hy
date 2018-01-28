@@ -1,0 +1,18 @@
+kayttaja->selain:
+note left of selain
+käyttäjä luo uuden muistiinpanon single page -versiossaja 
+painaa talenna-nappia
+end note
+
+note left of selain
+Selain ajaa javascriptin ja lisää uuden muistiinpanon listalle
+ja piirtää sivun uudelleen
+end note
+
+selain->palvelin: POST fullstack-exampleapp.herokuapp.com/new_note_spa
+palvelin->selain: Status 201, Created
+
+note left of selain
+Konsoliin tulostetaan, 
+että uusi muistiinpano on onnistuneesti luotu
+end note
