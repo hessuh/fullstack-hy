@@ -1,0 +1,46 @@
+
+kayttaja->selain:
+note left of selain
+kayttaja kirjottaa osoiteriville
+fullstack-exampleapp.herokuapp.com
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com
+note left of palvelin
+  muodostetaan HTML missä olemassaolevien
+  muistiinpanojen lukumäärä päivitettynä
+end note
+
+palvelin->selain: Status 200 OK, HTML-koodi
+
+kayttaja->selain:
+note left of selain
+Käyttäjä avaa muistiinpanot-linkin
+end note
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/notes
+palvelin->selain: Status 200 OK, HTML-koodi
+note left of selain
+Selain hakee polusta notes html tiedoston, 
+josta selain saa tiedon hakea main.css ja main.js tiedostot.
+end note
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.css
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.js
+
+palvelin->selain: status 200, CSS-tyyli
+note left of selain
+selain ottaa käyttöön tyylitiedoston
+end note
+
+palvelin->selain: status 200 OK, javascript-koodia
+note left of selain
+selain suorittaa haetun main.js javascript tiedoston, 
+joka avaa uuden HTTP GET yhteyden data.json tiedon noutoa varten
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/data.json
+palvelin->selain: status 200 OK, json-data
+
+note left of selain
+Javascript lisää elementit olemassa olevaan html koodiin,
+jonka selain sitten näyttää. Data tulostetaan myös konsoliin.
+end note
