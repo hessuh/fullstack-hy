@@ -1,12 +1,8 @@
 import React from 'react'
 
-const Osa = ({osa}) => <p>{osa.nimi} {osa.tehtavia}</p>
-const Otsikko = ({otsikko}) => <h1>{otsikko}</h1>
-const Sisalto = ({osat}) => <div>{osat.map(osa => <Osa osa={osa} key={osa.id}/>)}</div>
-
-const Yhteensa = ({osat}) => <p>yhteensä {sum(osat)} tehtävää</p>
-const sum = (osat) => osat.reduce((yht, iter) => yht + iter.tehtavia, 0)
-
+import Otsikko from './Otsikko'
+import Sisalto from './Sisalto'
+import Yhteensa from './Yhteensa'
 
 const Kurssi = ({kurssi}) => {
     return (
