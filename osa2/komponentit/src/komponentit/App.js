@@ -43,8 +43,6 @@ const App = () => {
 
     return (
         <div>
-            <h1>Half-Stack -sovelluskehitys</h1>
-
             {kurssit.map(kurssi => <Kurssi kurssi={kurssi} key={kurssi.id}/>)}
         </div>
     )
