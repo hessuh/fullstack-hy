@@ -18,10 +18,13 @@ class App extends React.Component {
 
     addPerson = (event) => {
         event.preventDefault();
+        if (this.isNameInList(this.state.newName)) return;
         const new_persons = this.state.persons;
         new_persons.push({name: this.state.newName});
         this.setState({persons: new_persons})
     };
+
+    isNameInList = (name) => this.state.persons.some(person => person.name === name)
 
     render() {
         return (
