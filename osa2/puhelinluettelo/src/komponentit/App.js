@@ -1,8 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 
 import Persons from './Persons'
-
+import personService from '../services/persons'
 
 class App extends React.Component {
     constructor(props) {
@@ -16,12 +15,10 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        console.log('will mount')
-        axios
-            .get('http://localhost:3001/persons')
-            .then(response => {
-                console.log('promise fulfilled')
-                this.setState({ persons: response.data })
+        personService
+            .getAll()
+            .then(persons => {
+                this.setState({persons: persons})
             })
     }
 
@@ -37,16 +34,22 @@ class App extends React.Component {
         this.setState({filter: event.target.value})
     };
 
-
     addPerson = (event) => {
         event.preventDefault();
         if (this.isNameInList(this.state.newName)) return;
-        const new_persons = this.state.persons;
-        new_persons.push({
-            name: this.state.newName,
-            number: this.state.newNumber
-        });
-        this.setState({persons: new_persons})
+        personService
+            .create(
+                {
+                    name: this.state.newName,
+                    number: this.state.newNumber
+                })
+            .then((created) => {
+                const new_persons = this.state.persons
+                new_persons.push(created)
+                this.setState({
+                    persons: new_persons
+                })
+            })
     };
 
     isNameInList = (name) => this.state.persons.some(person => person.name === name)
@@ -86,7 +89,7 @@ class App extends React.Component {
                         <button type="submit">lisää</button>
                     </div>
                 </form>
-                <Persons persons={this.state.persons} filter={this.state.filter} />
+                <Persons persons={this.state.persons} filter={this.state.filter}/>
             </div>
         )
     }

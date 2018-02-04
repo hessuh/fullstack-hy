@@ -1,7 +1,7 @@
 import React from 'react';
 import Person from './Person';
 
-const filterWithName= (persons, filter) =>
+const filterWithName = (persons, filter) =>
     persons.filter(person =>
         person.name.toUpperCase().includes(filter.toUpperCase()));
 
