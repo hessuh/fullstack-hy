@@ -1,5 +1,5 @@
 import React from 'react';
-import Person from './Person';
+import Persons from './Persons'
 
 class App extends React.Component {
     constructor(props) {
@@ -24,6 +24,11 @@ class App extends React.Component {
         this.setState({newName: event.target.value})
     };
 
+    handleFilterChange = (event) => {
+        this.setState({filter: event.target.value})
+    };
+
+
     addPerson = (event) => {
         event.preventDefault();
         if (this.isNameInList(this.state.newName)) return;
@@ -44,6 +49,14 @@ class App extends React.Component {
                 <form onSubmit={this.addPerson}>
                     <div>
                         <div>
+                            <h2>Rajaa näytettäviä:</h2>
+                            <input
+                                value={this.state.filter}
+                                onChange={this.handleFilterChange}
+                            />
+                        </div>
+                        <h2>Lisää uusi</h2>
+                        <div>
                             nimi:
                             <input
                                 value={this.state.newName}
@@ -59,14 +72,12 @@ class App extends React.Component {
                             />
 
                         </div>
-
                     </div>
                     <div>
                         <button type="submit">lisää</button>
                     </div>
                 </form>
-                <h2>Numerot</h2>
-                {this.state.persons.map(person => <Person person={person} key={person.name}/>)}
+                <Persons persons={this.state.persons} filter={this.state.filter} />
             </div>
         )
     }
