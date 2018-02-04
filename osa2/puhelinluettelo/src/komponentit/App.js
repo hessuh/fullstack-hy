@@ -1,16 +1,22 @@
 import React from 'react';
-import Name from './Name';
+import Person from './Person';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             persons: [
-                {name: 'Arto Hellas'}
+                {name: 'Arto Hellas',
+                 number: '12345678'}
             ],
-            newName: ''
+            newName: '',
+            newNumber: ''
         }
     }
+
+    handleNumberChange = (event) => {
+        this.setState({newNumber: event.target.value})
+    };
 
     handleNameChange = (event) => {
         this.setState({newName: event.target.value})
@@ -20,7 +26,10 @@ class App extends React.Component {
         event.preventDefault();
         if (this.isNameInList(this.state.newName)) return;
         const new_persons = this.state.persons;
-        new_persons.push({name: this.state.newName});
+        new_persons.push({
+            name: this.state.newName,
+            number: this.state.newNumber
+            });
         this.setState({persons: new_persons})
     };
 
@@ -37,13 +46,19 @@ class App extends React.Component {
                             value={this.state.newName}
                             onChange={this.handleNameChange}
                         />
+                        puhelinnumero:
+                        <input
+                            value={this.state.newNumber}
+                            onChange={this.handleNumberChange}
+                        />
+
                     </div>
                     <div>
                         <button type="submit">lisää</button>
                     </div>
                 </form>
                 <h2>Numerot</h2>
-                {this.state.persons.map(person => <Name person={person} key={person.name}/>)}
+                {this.state.persons.map(person => <Person person={person} key={person.name}/>)}
             </div>
         )
     }
