@@ -6,8 +6,10 @@ class App extends React.Component {
         super(props);
         this.state = {
             persons: [
-                {name: 'Arto Hellas',
-                 number: '12345678'}
+                {
+                    name: 'Arto Hellas',
+                    number: '12345678'
+                }
             ],
             newName: '',
             newNumber: ''
@@ -29,7 +31,7 @@ class App extends React.Component {
         new_persons.push({
             name: this.state.newName,
             number: this.state.newNumber
-            });
+        });
         this.setState({persons: new_persons})
     };
 
@@ -41,16 +43,22 @@ class App extends React.Component {
                 <h2>Puhelinluettelo</h2>
                 <form onSubmit={this.addPerson}>
                     <div>
-                        nimi:
-                        <input
-                            value={this.state.newName}
-                            onChange={this.handleNameChange}
-                        />
-                        puhelinnumero:
-                        <input
-                            value={this.state.newNumber}
-                            onChange={this.handleNumberChange}
-                        />
+                        <div>
+                            nimi:
+                            <input
+                                value={this.state.newName}
+                                onChange={this.handleNameChange}
+                            />
+
+                        </div>
+                        <div>
+                            puhelinnumero:
+                            <input
+                                value={this.state.newNumber}
+                                onChange={this.handleNumberChange}
+                            />
+
+                        </div>
 
                     </div>
                     <div>
