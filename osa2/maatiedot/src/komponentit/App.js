@@ -7,7 +7,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            countries: []
+            countries: [],
+            filter: ''
         }
     }
 
@@ -19,10 +20,20 @@ class App extends React.Component {
             })
     }
 
+    filterChangeHandle = (event) => {
+        this.setState({filter: event.target.value})
+    }
+
     render() {
         return (
             <div>
+                <input
+                    value={this.state.filter}
+                    onChange={this.filterChangeHandle}
+                />
+                {this.state.filter}
                 <Countries countries={this.state.countries}/>
+
             </div>
         )
     }
