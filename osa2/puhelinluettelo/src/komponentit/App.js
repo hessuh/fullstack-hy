@@ -45,20 +45,41 @@ class App extends React.Component {
 
     addPerson = (event) => {
         event.preventDefault();
-        if (this.isNameInList(this.state.newName)) return;
-        personService
-            .create(
-                {
-                    name: this.state.newName,
-                    number: this.state.newNumber
+
+        if (!this.isNameInList(this.state.newName)) {
+            personService
+                .create(
+                    {
+                        name: this.state.newName,
+                        number: this.state.newNumber
+                    })
+                .then((new_person) => {
+                    const new_persons = this.state.persons
+                    new_persons.push(new_person);
+                    this.setState({
+                        persons: new_persons
+                    })
                 })
-            .then((created) => {
-                const new_persons = this.state.persons
-                new_persons.push(created)
-                this.setState({
-                    persons: new_persons
-                })
+        } else {
+            const person = this.state.persons.filter(
+                person => person.name.toUpperCase() === this.state.newName.toUpperCase()
+            )[0];
+            const new_person = Object.assign(
+                person,
+                {number: this.state.newNumber}
+            );
+            personService
+                .update(new_person.id, new_person)
+                .catch(error => {
+                    personService.create(new_person)
+                });
+            const persons = this.state.persons.filter(
+                person => person.id !== new_person.id
+            ).concat(new_person);
+            this.setState({
+                persons: persons
             })
+        }
     };
 
     isNameInList = (name) => this.state.persons.some(person => person.name === name)
