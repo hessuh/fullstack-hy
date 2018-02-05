@@ -2,6 +2,7 @@ import React from 'react';
 
 import Persons from './Persons'
 import personService from '../services/persons'
+import Notification from './Notification'
 
 class App extends React.Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class App extends React.Component {
             persons: [],
             newName: '',
             newNumber: '',
+            notification: null,
             filter: ''
         }
     }
@@ -39,8 +41,12 @@ class App extends React.Component {
         const new_persons = this.state.persons;
         new_persons.splice(new_persons.indexOf(person), 1)
         this.setState({
+            notification: `poistettiin ${person.name}`,
             persons: new_persons
         })
+        setTimeout(() => {
+            this.setState({ notification: null })
+        }, 5000)
     };
 
     addPerson = (event) => {
@@ -57,9 +63,13 @@ class App extends React.Component {
                     const new_persons = this.state.persons
                     new_persons.push(new_person);
                     this.setState({
+                        notification: `lisättiin ${new_person.name}`,
                         persons: new_persons
                     })
                 })
+                setTimeout(() => {
+                    this.setState({ notification: null })
+                }, 5000)
         } else {
             const person = this.state.persons.filter(
                 person => person.name.toUpperCase() === this.state.newName.toUpperCase()
@@ -77,8 +87,12 @@ class App extends React.Component {
                 person => person.id !== new_person.id
             ).concat(new_person);
             this.setState({
+                notification: `muutettiin ${new_person.name}`,
                 persons: persons
             })
+            setTimeout(() => {
+                this.setState({ notification: null })
+            }, 5000)
         }
     };
 
@@ -87,6 +101,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
+                <Notification message={this.state.notification} />
                 <h2>Puhelinluettelo</h2>
                 <form onSubmit={this.addPerson}>
                     <div>
