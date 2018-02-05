@@ -34,6 +34,15 @@ class App extends React.Component {
         this.setState({filter: event.target.value})
     };
 
+    delPerson = (person) => () => {
+        personService.del(person);
+        const new_persons = this.state.persons;
+        new_persons.splice(new_persons.indexOf(person), 1)
+        this.setState({
+            persons: new_persons
+        })
+    };
+
     addPerson = (event) => {
         event.preventDefault();
         if (this.isNameInList(this.state.newName)) return;
@@ -89,7 +98,7 @@ class App extends React.Component {
                         <button type="submit">lisää</button>
                     </div>
                 </form>
-                <Persons persons={this.state.persons} filter={this.state.filter}/>
+                <Persons persons={this.state.persons} filter={this.state.filter} delperson={this.delPerson}/>
             </div>
         )
     }

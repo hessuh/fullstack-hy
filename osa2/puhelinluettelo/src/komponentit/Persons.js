@@ -5,14 +5,14 @@ const filterWithName = (persons, filter) =>
     persons.filter(person =>
         person.name.toUpperCase().includes(filter.toUpperCase()));
 
-const Persons = ({persons, filter}) => {
+const Persons = ({persons, filter, delperson}) => {
     return (
         <div>
             <h2>Numerot</h2>
             <table>
                 <tr>
                 {filterWithName(persons, filter).map(
-                    person => <Person person={person} key={person.name} />
+                    person => <Person person={person} key={person.name} delperson={delperson} />
                 )}
                 </tr>
             </table>
